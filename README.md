@@ -1,4 +1,8 @@
-# Simulador-de-M-quina-de-Turing
+# Simulador de Maquina de Turing
 
-Entradas: um arquivo de especificações (json) e um arquivo de problema (txt)
-Saídas: um arquivo com a saída (fita em txt) e o aviso indicando se aceita ou rejeita na linha de comando (1 aceita ou 0 rejeita)
+Este projeto implementa um simulador de Máquina de Turing conforme especificações fornecidas em um arquivo JSON, e executa a simulação de acordo com um arquivo de entrada (problema) no formato TXT.
+
+Como Executar
+Crie os arquivos de especificação (JSON) e de entrada (TXT).
+Execute o simulador passando os arquivos de especificação e de entrada como argumentos.
+O programa gerará a fita final e exibirá o resultado na linha de comando.
