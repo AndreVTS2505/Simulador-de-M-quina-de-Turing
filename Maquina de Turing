@@ -1,0 +1,54 @@
+import json
+
+def ler_arquivo_json(nome_arquivo):
+    with open(nome_arquivo, 'r') as f:
+        return json.load(f)
+
+def ler_arquivo_txt(nome_arquivo):
+    with open(nome_arquivo, 'r') as f:
+        return list(f.read().strip())  
+
+def escrever_arquivo_saida(nome_arquivo, fita, aceita):
+    with open(nome_arquivo, 'w') as f:
+        f.write(''.join(fita))
+    print(1 if aceita else 0)  
+
+def simular_maquina_turing(arquivo_json, arquivo_entrada, arquivo_saida):
+    
+    maquina = ler_arquivo_json(arquivo_json)
+    
+    fita = ler_arquivo_txt(arquivo_entrada)
+    
+    estado_atual = maquina['initial']
+    posicao_cabeca = 0 
+    
+    while True:
+       
+        if posicao_cabeca < 0 or posicao_cabeca >= len(fita):
+            fita.append(maquina['white'])  # Se a cabeça sair da fita, adiciona símbolo branco
+        simbolo = fita[posicao_cabeca]
+        
+        transicao_encontrada = False
+        for transicao in maquina['transitions']:
+            if transicao['from'] == estado_atual and transicao['read'] == simbolo:
+                fita[posicao_cabeca] = transicao['write']
+                estado_atual = transicao['to']
+                if transicao['dir'] == 'R':
+                    posicao_cabeca += 1
+                elif transicao['dir'] == 'L':
+                    posicao_cabeca -= 1
+                transicao_encontrada = True
+                break
+        
+        if not transicao_encontrada:
+           
+            aceita = estado_atual in maquina['final']
+            escrever_arquivo_saida(arquivo_saida, fita, aceita)
+            return
+      
+        if estado_atual in maquina['final']:
+            aceita = True
+            escrever_arquivo_saida(arquivo_saida, fita, aceita)
+            return
+
+simular_maquina_turing(' .json', 'entrada.txt', 'saida.txt')
